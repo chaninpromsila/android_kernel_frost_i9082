@@ -20,24 +20,12 @@
 #include <linux/seq_file.h>
 #include <linux/memblock.h>
 
-static struct memblock_region memblock_memory_init_regions[INIT_MEMBLOCK_REGIONS] __initdata_memblock;
-static struct memblock_region memblock_reserved_init_regions[INIT_MEMBLOCK_REGIONS] __initdata_memblock;
-
-struct memblock memblock __initdata_memblock = {
-	.memory.regions		= memblock_memory_init_regions,
-	.memory.cnt		= 1,	/* empty dummy entry */
-	.memory.max		= INIT_MEMBLOCK_REGIONS,
-
-	.reserved.regions	= memblock_reserved_init_regions,
-	.reserved.cnt		= 1,	/* empty dummy entry */
-	.reserved.max		= INIT_MEMBLOCK_REGIONS,
-
-	.current_limit		= MEMBLOCK_ALLOC_ANYWHERE,
-};
+struct memblock memblock __initdata_memblock;
 
 int memblock_debug __initdata_memblock;
 int memblock_can_resize __initdata_memblock;
-
+static struct memblock_region memblock_memory_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
+static struct memblock_region memblock_reserved_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
 
 /* inline so we don't get a warning when pr_debug is compiled out */
 static inline const char *memblock_type_name(struct memblock_type *type)
@@ -53,6 +41,17 @@ static inline const char *memblock_type_name(struct memblock_type *type)
 /*
  * Address comparison utilities
  */
+
+static phys_addr_t __init_memblock memblock_align_down(phys_addr_t addr, phys_addr_t size)
+{
+	return addr & ~(size - 1);
+}
+
+static phys_addr_t __init_memblock memblock_align_up(phys_addr_t addr, phys_addr_t size)
+{
+	return (addr + (size - 1)) & ~(size - 1);
+}
+
 static unsigned long __init_memblock memblock_addrs_overlap(phys_addr_t base1, phys_addr_t size1,
 				       phys_addr_t base2, phys_addr_t size2)
 {
@@ -88,7 +87,7 @@ static phys_addr_t __init_memblock memblock_find_region(phys_addr_t start, phys_
 	if (end < size)
 		return MEMBLOCK_ERROR;
 
-	base = round_down(end - size, align);
+	base = memblock_align_down((end - size), align);
 
 	/* Prevent allocations returning 0 as it's also used to
 	 * indicate an allocation failure
@@ -103,7 +102,7 @@ static phys_addr_t __init_memblock memblock_find_region(phys_addr_t start, phys_
 		res_base = memblock.reserved.regions[j].base;
 		if (res_base < size)
 			break;
-		base = round_down(res_base - size, align);
+		base = memblock_align_down(res_base - size, align);
 	}
 
 	return MEMBLOCK_ERROR;
@@ -487,7 +486,7 @@ phys_addr_t __init __memblock_alloc_base(phys_addr_t size, phys_addr_t align, ph
 	/* We align the size to limit fragmentation. Without this, a lot of
 	 * small allocs quickly eat up the whole reserve array on sparc
 	 */
-	size = round_up(size, align);
+	size = memblock_align_up(size, align);
 
 	found = memblock_find_base(size, align, 0, max_addr);
 	if (found != MEMBLOCK_ERROR &&
@@ -563,7 +562,7 @@ static phys_addr_t __init memblock_alloc_nid_region(struct memblock_region *mp,
 	start = mp->base;
 	end = start + mp->size;
 
-	start = round_up(start, align);
+	start = memblock_align_up(start, align);
 	while (start < end) {
 		phys_addr_t this_end;
 		int this_nid;
@@ -591,7 +590,7 @@ phys_addr_t __init memblock_alloc_nid(phys_addr_t size, phys_addr_t align, int n
 	/* We align the size to limit fragmentation. Without this, a lot of
 	 * small allocs quickly eat up the whole reserve array on sparc
 	 */
-	size = round_up(size, align);
+	size = memblock_align_up(size, align);
 
 	/* We do a bottom-up search for a region with the right
 	 * nid since that's easier considering how memblock_nid_range()
@@ -613,7 +612,7 @@ phys_addr_t __init memblock_alloc_try_nid(phys_addr_t size, phys_addr_t align, i
 
 	if (res)
 		return res;
-	return memblock_alloc_base(size, align, MEMBLOCK_ALLOC_ACCESSIBLE);
+	return memblock_alloc_base(size, align, MEMBLOCK_ALLOC_ANYWHERE);
 }
 
 
@@ -625,12 +624,6 @@ phys_addr_t __init memblock_alloc_try_nid(phys_addr_t size, phys_addr_t align, i
 phys_addr_t __init memblock_phys_mem_size(void)
 {
 	return memblock.memory_size;
-}
-
-/* lowest address */
-phys_addr_t __init_memblock memblock_start_of_DRAM(void)
-{
-	return memblock.memory.regions[0].base;
 }
 
 phys_addr_t __init_memblock memblock_end_of_DRAM(void)
@@ -776,6 +769,39 @@ void __init memblock_analyze(void)
 
 	/* We allow resizing from there */
 	memblock_can_resize = 1;
+}
+
+void __init memblock_init(void)
+{
+	static int init_done __initdata = 0;
+
+	if (init_done)
+		return;
+	init_done = 1;
+
+	/* Hookup the initial arrays */
+	memblock.memory.regions	= memblock_memory_init_regions;
+	memblock.memory.max		= INIT_MEMBLOCK_REGIONS;
+	memblock.reserved.regions	= memblock_reserved_init_regions;
+	memblock.reserved.max	= INIT_MEMBLOCK_REGIONS;
+
+	/* Write a marker in the unused last array entry */
+	memblock.memory.regions[INIT_MEMBLOCK_REGIONS].base = (phys_addr_t)RED_INACTIVE;
+	memblock.reserved.regions[INIT_MEMBLOCK_REGIONS].base = (phys_addr_t)RED_INACTIVE;
+
+	/* Create a dummy zero size MEMBLOCK which will get coalesced away later.
+	 * This simplifies the memblock_add() code below...
+	 */
+	memblock.memory.regions[0].base = 0;
+	memblock.memory.regions[0].size = 0;
+	memblock.memory.cnt = 1;
+
+	/* Ditto. */
+	memblock.reserved.regions[0].base = 0;
+	memblock.reserved.regions[0].size = 0;
+	memblock.reserved.cnt = 1;
+
+	memblock.current_limit = MEMBLOCK_ALLOC_ANYWHERE;
 }
 
 static int __init early_memblock(char *p)
