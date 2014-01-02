@@ -79,7 +79,7 @@ echo -e ""
 echo -e "Zipping"
 echo "==============================================="
 cd frost
-zip -r frost-$DATE-$USER--stock-$DEVICE-$VERSION.zip .
+zip -r frost-$DATE-$USER-stock-$DEVICE-$VERSION.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
 echo "==============================================="
