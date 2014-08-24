@@ -216,7 +216,7 @@ sioplus_dispatch_requests(struct request_queue *q, int force)
 	 * Retrieve any expired request after a batch of
 	 * sequential requests.
 	 */
-	if (sd->batched > sd->fifo_batch) {
+	if (sd->batched >= sd->fifo_batch) {
 		sd->batched = 0;
 		rq = sioplus_choose_expired_request(sd);
 	}
@@ -363,6 +363,7 @@ static ssize_t __FUNC(struct elevator_queue *e, const char *page, size_t count)	
 		*(__PTR) = __data;					\
 	return ret;							\
 }
+
 STORE_FUNCTION(sioplus_sync_read_expire_store, &sd->fifo_expire[SYNC][READ], 0, INT_MAX, 1);
 STORE_FUNCTION(sioplus_sync_write_expire_store, &sd->fifo_expire[SYNC][WRITE], 0, INT_MAX, 1);
 STORE_FUNCTION(sioplus_async_read_expire_store, &sd->fifo_expire[ASYNC][READ], 0, INT_MAX, 1);
@@ -370,6 +371,12 @@ STORE_FUNCTION(sioplus_async_write_expire_store, &sd->fifo_expire[ASYNC][WRITE],
 STORE_FUNCTION(sioplus_fifo_batch_store, &sd->fifo_batch, 0, INT_MAX, 0);
 STORE_FUNCTION(sioplus_writes_starved_store, &sd->writes_starved, 0, INT_MAX, 0);
 STORE_FUNCTION(sioplus_async_reads_starved_store, &sd->async_reads_starved, 0, INT_MAX, 0);
+STORE_FUNCTION(sio_sync_read_expire_store, &sd->fifo_expire[SYNC][READ], 0, INT_MAX, 1);
+STORE_FUNCTION(sio_sync_write_expire_store, &sd->fifo_expire[SYNC][WRITE], 0, INT_MAX, 1);
+STORE_FUNCTION(sio_async_read_expire_store, &sd->fifo_expire[ASYNC][READ], 0, INT_MAX, 1);
+STORE_FUNCTION(sio_async_write_expire_store, &sd->fifo_expire[ASYNC][WRITE], 0, INT_MAX, 1);
+STORE_FUNCTION(sio_fifo_batch_store, &sd->fifo_batch, 1, INT_MAX, 0);
+STORE_FUNCTION(sio_writes_starved_store, &sd->writes_starved, 0, INT_MAX, 0);
 #undef STORE_FUNCTION
 
 #define DD_ATTR(name) \
