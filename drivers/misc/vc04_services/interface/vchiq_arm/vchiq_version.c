@@ -2,7 +2,7 @@
 #include <linux/broadcom/vc_debug_sym.h>
 
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_hostname, "Dracula" );
-VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_version, "053405c8a91aca5ed1abc9e93f7eaa091f579f45 (tainted)" );
+VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_version, "0c875bf072dbb5dc4318a8ebd20be87501966ad4 (tainted)" );
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_time,    __TIME__ );
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_date,    __DATE__ );
 
