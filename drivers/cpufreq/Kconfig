@@ -139,6 +139,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASS2
        help
           Use the CPUFreq governor 'smartassV2' as default
 
+config CPU_FREQ_DEFAULT_GOV_HOTPLUG
+      bool "hotplug"
+      select CPU_FREQ_GOV_HOTPLUG
+      help
+          Use the CPUFreq governor 'hotplug' as default
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -257,6 +263,14 @@ config CPU_FREQ_GOV_LULZACTIVE
        depends on CPU_FREQ
        help
           'lulzactive' - based on Interactive & Smartass governors.
+
+          If in doubt, say N.
+
+config CPU_FREQ_GOV_HOTPLUG
+       tristate "'hotplug' cpufreq governor"
+       depends on CPU_FREQ
+       help
+          'hotplug' - based on ondemand governor.
 
           If in doubt, say N.
 
