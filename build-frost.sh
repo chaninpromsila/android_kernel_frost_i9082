@@ -8,7 +8,7 @@ export ARCH=arm
 echo "Done"
 echo "Initializing cross compile"
 
-export CROSS_COMPILE=~/toolchain/gcc-arm-none-eabi-4_7-2013q1/bin/arm-none-eabi-
+export CROSS_COMPILE=/home/ashish/toolchain/gcc-arm-none-eabi-4_7-2013q1/bin/arm-none-eabi-
 
 echo "Done"
 
