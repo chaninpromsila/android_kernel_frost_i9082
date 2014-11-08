@@ -17,3 +17,8 @@ echo "done"
 
 echo -p "Press Enter to build Kernel ..."
 make CONFIG_DEBUG_SECTION_MISMATCH=y -j2
+
+echo -r "Copying modules"
+echo "==============================================="
+
+find -name '*.ko' -exec cp {} ../modules/cm \;
