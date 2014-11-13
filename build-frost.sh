@@ -91,6 +91,8 @@ echo "==============================================="
 mv frost-$DATE-$USER-$DEVICE-$VERSION.zip ../../out
 cd ..
 rm -rf toolchain
+make clean mrproper
+git checkout drivers/misc/vc04_services/interface/vchiq_arm/vchiq_version.c
 echo -e ""
 echo -e "=============================================="
 echo -e "      FROST KERNEL COMPILATION SUCCESSFUL     "

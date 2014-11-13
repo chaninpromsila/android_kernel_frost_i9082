@@ -2,7 +2,7 @@
 #include <linux/broadcom/vc_debug_sym.h>
 
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_hostname, "ashish-snowflake" );
-VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_version, "3116d27766b4238ee45fdfcf0ed902cce9014d21 (tainted)" );
+VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_version, "9ff14f0c15d9075562e5dd2764e0743af7aaa85a (tainted)" );
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_time,    __TIME__ );
 VC_DEBUG_DECLARE_STRING_VAR( vchiq_build_date,    __DATE__ );
 
