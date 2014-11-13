@@ -48,7 +48,7 @@ export CROSS_COMPILE=$(pwd)/toolchain/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-
 
 echo "Done"
 
-make frost_baffin_defconfig
+make froststock_baffin_defconfig
 
 read -p "Press Enter to build Kernel ..."
 echo "==============================================="
@@ -79,7 +79,7 @@ echo -e ""
 echo -e "Zipping"
 echo "==============================================="
 cd frost
-zip -r frost-$DATE-$USER-$DEVICE-$VERSION.zip .
+zip -r frost-$DATE-$USER--stock-$DEVICE-$VERSION.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
 echo "==============================================="
@@ -88,7 +88,7 @@ rm -rf codekidX
 echo -e ""
 echo -e "Move Finished kernel to HOME"
 echo "==============================================="
-mv frost-$DATE-$USER-$DEVICE-$VERSION.zip ../../out
+mv frost-$DATE-$USER-stock-$DEVICE-$VERSION.zip ../../out
 cd ..
 rm -rf toolchain
 make clean mrproper
