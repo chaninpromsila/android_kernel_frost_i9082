@@ -3,7 +3,7 @@
 MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
-VERSION=1.81
+VERSION=-lollipop-2.00-
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
@@ -38,7 +38,7 @@ elif [ ! -d "toolchain" ]
 fi
 
 
-read -p "Initializing Toolchain ..."
+read -p "Initialize Toolchain by pressing ENTER ..."
 echo -e "==============================================="
 echo -e ""
 
@@ -57,7 +57,7 @@ make CONFIG_DEBUG_SECTION_MISMATCH=y -j2
 
 if [ -f $Kernel ]
 	then
-echo -e "Copying modules"
+echo -e "Copying modules and necessary files"
 echo "==============================================="
 mkdir frost/codekidX
 cd frost/codekidX
@@ -67,6 +67,7 @@ mkdir modules
 cd /home/ashish/frost
 find -name '*.ko' -exec cp {} $MODULES \;
 cp /home/ashish/out/VoiceSolution.ko $MODULES
+cp /home/ashish/out/busybox frost/codekidX
 echo -e ""
 echo -e "Done"
 echo -e ""
@@ -79,7 +80,7 @@ echo -e ""
 echo -e "Zipping"
 echo "==============================================="
 cd frost
-zip -r frost-$DATE-$USER-$DEVICE-$VERSION.zip .
+zip -r frost-$VERSION-$DATE-$USER-$DEVICE.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
 echo "==============================================="
@@ -93,9 +94,15 @@ cd ..
 rm -rf toolchain
 make clean mrproper
 git checkout drivers/misc/vc04_services/interface/vchiq_arm/vchiq_version.c
+clear
 echo -e ""
 echo -e "=============================================="
 echo -e "      FROST KERNEL COMPILATION SUCCESSFUL     "
 echo -e "=============================================="
-		
+echo -e ""
+echo -e "File Name:" frost-$DATE-$USER-$DEVICE-$VERSION.zip
+echo -e ""
+read -p "Press Enter to take you to the directory !!"
+gnome-open /home/ashish/out
+
 fi
