@@ -3,7 +3,7 @@
 MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
-VERSION=-lollipop-2.00-
+VERSION=-lollipop-2.00
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
@@ -68,11 +68,7 @@ mkdir modules
 cd /home/ashish/frost
 find -name '*.ko' -exec cp {} $MODULES \;
 cp /home/ashish/out/VoiceSolution.ko $MODULES
-<<<<<<< HEAD
 cp /home/ashish/out/AeroControl.apk /home/ashish/frost/frost/codekidX/app
-=======
-cp /home/ashish/out/busybox frost/codekidX
->>>>>>> parent of 0be4fff... frost: mounting data by sbin/mount not busybox
 echo -e ""
 echo -e "Done"
 echo -e ""
@@ -85,7 +81,7 @@ echo -e ""
 echo -e "Zipping"
 echo "==============================================="
 cd frost
-zip -r frost-$VERSION-$DATE-$USER-$DEVICE.zip .
+zip -r frost-$DATE-$USER-$DEVICE-$VERSION.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
 echo "==============================================="
