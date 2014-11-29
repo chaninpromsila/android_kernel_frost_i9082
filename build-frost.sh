@@ -3,7 +3,7 @@
 MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
-VERSION=lollipop-2.00
+VERSION=-lollipop-2.00-
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
@@ -57,7 +57,7 @@ make CONFIG_DEBUG_SECTION_MISMATCH=y -j2
 
 if [ -f $Kernel ]
 	then
-echo -e "Copying modules"
+echo -e "Copying modules and necessary files"
 echo "==============================================="
 mkdir frost/codekidX
 cd frost/codekidX
@@ -68,7 +68,11 @@ mkdir modules
 cd /home/ashish/frost
 find -name '*.ko' -exec cp {} $MODULES \;
 cp /home/ashish/out/VoiceSolution.ko $MODULES
+<<<<<<< HEAD
 cp /home/ashish/out/AeroControl.apk /home/ashish/frost/frost/codekidX/app
+=======
+cp /home/ashish/out/busybox frost/codekidX
+>>>>>>> parent of 0be4fff... frost: mounting data by sbin/mount not busybox
 echo -e ""
 echo -e "Done"
 echo -e ""
@@ -81,7 +85,7 @@ echo -e ""
 echo -e "Zipping"
 echo "==============================================="
 cd frost
-zip -r frost-$DATE-$USER-$DEVICE-$VERSION.zip .
+zip -r frost-$VERSION-$DATE-$USER-$DEVICE.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
 echo "==============================================="

@@ -2745,9 +2745,13 @@ CONFIG_KEYS=y
 # CONFIG_SECURITY_DMESG_RESTRICT is not set
 CONFIG_SECURITY=y
 # CONFIG_SECURITYFS is not set
+<<<<<<< HEAD
 CONFIG_SECURITY_NETWORK=y
 CONFIG_LSM_MMAP_MIN_ADDR=4096
 CONFIG_SECURITY_SELINUX=y
+=======
+# CONFIG_SECURITY_NETWORK is not set
+>>>>>>> parent of 0be4fff... frost: mounting data by sbin/mount not busybox
 # CONFIG_SECURITY_PATH is not set
 # CONFIG_SECURITY_TOMOYO is not set
 # CONFIG_SECURITY_APPARMOR is not set
