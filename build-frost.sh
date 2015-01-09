@@ -4,7 +4,7 @@ MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
 VERSION=-lollipop-2.00
-CODENAME=-lollipie
+CODENAME=-lollipie-2.10
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
@@ -45,7 +45,7 @@ echo -e ""
 
 export ARCH=arm
 #Toolchain
-export CROSS_COMPILE=$(pwd)/toolchain/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-
+export CROSS_COMPILE=$(pwd)/toolchain/android-toolchain-eabi/bin/arm-eabi-
 
 echo "Done"
 
