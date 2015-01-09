@@ -1,6 +1,6 @@
 # Initializing variables
 
-MODULES=frost/codekidX/lib/modules
+MODULES=frostkk/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
 VERSION=2.10
@@ -32,8 +32,8 @@ elif [ ! -d "toolchain" ]
 	then
 	mkdir toolchain
     cd ..
-    cp -r toolchains/* frost/toolchain
-    cd frost
+    cp -r toolchains/* frostkk/toolchain
+    cd frostkk
 
 fi
 
@@ -73,12 +73,12 @@ echo -e ""
 echo -e ""
 echo -e "Copying kernel"
 echo "==============================================="
-cp $Kernel frost/kernel
+cp $Kernel frostkk/kernel
 echo -e ""
 echo -e ""
 echo -e "Zipping"
 echo "==============================================="
-cd frost
+cd frostkk
 zip -r frost-$DATE-$USER-$DEVICE-$VERSION.zip .
 echo -e ""
 echo -e "Removing unwanted stuffs .."
