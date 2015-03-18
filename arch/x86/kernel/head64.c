@@ -98,14 +98,11 @@ void __init x86_64_start_reservations(char *real_mode_data)
 {
 	copy_bootdata(__va(real_mode_data));
 
-<<<<<<< HEAD
 	memblock_init();
 
-	memblock_x86_reserve_range(__pa_symbol(&_text), __pa_symbol(&__bss_stop), "TEXT DATA BSS");
-=======
 	memblock_reserve(__pa_symbol(&_text),
 			 __pa_symbol(&__bss_stop) - __pa_symbol(&_text));
->>>>>>> ec9dfcf... memblock: Kill memblock_init()
+
 
 #ifdef CONFIG_BLK_DEV_INITRD
 	/* Reserve INITRD */

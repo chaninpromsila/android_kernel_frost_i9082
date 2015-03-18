@@ -52,14 +52,12 @@ u64 memblock_find_in_range(u64 start, u64 end, u64 size, u64 align);
 int memblock_free_reserved_regions(void);
 int memblock_reserve_reserved_regions(void);
 
-<<<<<<< HEAD
-extern void memblock_init(void);
+
 extern void memblock_analyze(void);
 extern long memblock_add(phys_addr_t base, phys_addr_t size);
 extern long memblock_remove(phys_addr_t base, phys_addr_t size);
 extern long memblock_free(phys_addr_t base, phys_addr_t size);
 extern long memblock_reserve(phys_addr_t base, phys_addr_t size);
-=======
 void memblock_analyze(void);
 int memblock_add(phys_addr_t base, phys_addr_t size);
 int memblock_remove(phys_addr_t base, phys_addr_t size);

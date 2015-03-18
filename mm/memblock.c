@@ -37,11 +37,7 @@ struct memblock memblock __initdata_memblock = {
 
 int memblock_debug __initdata_memblock;
 int memblock_can_resize __initdata_memblock;
-<<<<<<< HEAD
-static struct memblock_region memblock_memory_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
-static struct memblock_region memblock_reserved_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
-=======
->>>>>>> ec9dfcf... memblock: Kill memblock_init()
+
 
 /* inline so we don't get a warning when pr_debug is compiled out */
 static inline const char *memblock_type_name(struct memblock_type *type)
@@ -782,42 +778,6 @@ void __init memblock_analyze(void)
 	memblock_can_resize = 1;
 }
 
-<<<<<<< HEAD
-void __init memblock_init(void)
-{
-	static int init_done __initdata = 0;
-
-	if (init_done)
-		return;
-	init_done = 1;
-
-	/* Hookup the initial arrays */
-	memblock.memory.regions	= memblock_memory_init_regions;
-	memblock.memory.max		= INIT_MEMBLOCK_REGIONS;
-	memblock.reserved.regions	= memblock_reserved_init_regions;
-	memblock.reserved.max	= INIT_MEMBLOCK_REGIONS;
-
-	/* Write a marker in the unused last array entry */
-	memblock.memory.regions[INIT_MEMBLOCK_REGIONS].base = (phys_addr_t)RED_INACTIVE;
-	memblock.reserved.regions[INIT_MEMBLOCK_REGIONS].base = (phys_addr_t)RED_INACTIVE;
-
-	/* Create a dummy zero size MEMBLOCK which will get coalesced away later.
-	 * This simplifies the memblock_add() code below...
-	 */
-	memblock.memory.regions[0].base = 0;
-	memblock.memory.regions[0].size = 0;
-	memblock.memory.cnt = 1;
-
-	/* Ditto. */
-	memblock.reserved.regions[0].base = 0;
-	memblock.reserved.regions[0].size = 0;
-	memblock.reserved.cnt = 1;
-
-	memblock.current_limit = MEMBLOCK_ALLOC_ANYWHERE;
-}
-
-=======
->>>>>>> ec9dfcf... memblock: Kill memblock_init()
 static int __init early_memblock(char *p)
 {
 	if (p && strstr(p, "debug"))
