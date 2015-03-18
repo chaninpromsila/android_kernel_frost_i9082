@@ -139,6 +139,27 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASS2
        help
           Use the CPUFreq governor 'smartassV2' as default
 
+config CPU_FREQ_DEFAULT_GOV_LIONHEART
+	bool "lionheart"
+	select CPU_FREQ_GOV_LIONHEART
+	help
+	  Use the CPUFreq governor 'lionheart' as default. See
+	  lionheart governor help for more details.
+
+config CPU_FREQ_DEFAULT_GOV_BRAZILIANWAX
+	bool "brazilianwax"
+	select CPU_FREQ_GOV_BRAZILIANWAX
+	help
+	  Use the CPUFreq governor 'brazilianwax' as default. See 
+	  brazilianwax governor help for more details.
+
+config CPU_FREQ_DEFAULT_GOV_SAVAGEDZEN
+	bool "savagedzen"
+	select CPU_FREQ_GOV_SAVAGEDZEN
+	help
+	  Use the CPUFreq governor 'savagedzen' as default. See
+	  savagedzen governor help for more details.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -257,6 +278,34 @@ config CPU_FREQ_GOV_LULZACTIVE
        depends on CPU_FREQ
        help
           'lulzactive' - based on Interactive & Smartass governors.
+
+          If in doubt, say N.
+
+config CPU_FREQ_GOV_LIONHEART
+	tristate "'lionheart' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  Conservative-based governor based on samsung update3 source.
+	  Tunables (such as thresholds and sampling rate) changed so the
+	  governor behaves more like the Performance one, with very
+	  aggressive scaling.
+
+          If in doubt, say N.
+
+config CPU_FREQ_GOV_BRAZILIANWAX
+	tristate "'brazilianwax' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  A smartassV2 based governor. More aggressive ramping.
+
+          If in doubt, say N.
+
+config CPU_FREQ_GOV_SAVAGEDZEN
+	tristate "'savagedzen' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  A smartassV2 based governor. Achieves good balance as compared to
+	  to brazilianwax (another smartassV2 based governor).
 
           If in doubt, say N.
 
