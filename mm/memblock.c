@@ -20,12 +20,28 @@
 #include <linux/seq_file.h>
 #include <linux/memblock.h>
 
-struct memblock memblock __initdata_memblock;
+static struct memblock_region memblock_memory_init_regions[INIT_MEMBLOCK_REGIONS] __initdata_memblock;
+static struct memblock_region memblock_reserved_init_regions[INIT_MEMBLOCK_REGIONS] __initdata_memblock;
+
+struct memblock memblock __initdata_memblock = {
+	.memory.regions		= memblock_memory_init_regions,
+	.memory.cnt		= 1,	/* empty dummy entry */
+	.memory.max		= INIT_MEMBLOCK_REGIONS,
+
+	.reserved.regions	= memblock_reserved_init_regions,
+	.reserved.cnt		= 1,	/* empty dummy entry */
+	.reserved.max		= INIT_MEMBLOCK_REGIONS,
+
+	.current_limit		= MEMBLOCK_ALLOC_ANYWHERE,
+};
 
 int memblock_debug __initdata_memblock;
 int memblock_can_resize __initdata_memblock;
+<<<<<<< HEAD
 static struct memblock_region memblock_memory_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
 static struct memblock_region memblock_reserved_init_regions[INIT_MEMBLOCK_REGIONS + 1] __initdata_memblock;
+=======
+>>>>>>> ec9dfcf... memblock: Kill memblock_init()
 
 /* inline so we don't get a warning when pr_debug is compiled out */
 static inline const char *memblock_type_name(struct memblock_type *type)
@@ -766,6 +782,7 @@ void __init memblock_analyze(void)
 	memblock_can_resize = 1;
 }
 
+<<<<<<< HEAD
 void __init memblock_init(void)
 {
 	static int init_done __initdata = 0;
@@ -799,6 +816,8 @@ void __init memblock_init(void)
 	memblock.current_limit = MEMBLOCK_ALLOC_ANYWHERE;
 }
 
+=======
+>>>>>>> ec9dfcf... memblock: Kill memblock_init()
 static int __init early_memblock(char *p)
 {
 	if (p && strstr(p, "debug"))
