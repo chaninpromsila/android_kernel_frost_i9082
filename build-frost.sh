@@ -69,7 +69,7 @@ mkdir modules
 cd /home/ashish/frost
 find -name '*.ko' -exec cp {} $MODULES \;
 cp /home/ashish/out/VoiceSolution.ko $MODULES
-cp /home/ashish/out/AeroControl.apk /home/ashish/frost/frost/codekidX/app
+cp /home/ashish/out/KernelAdiutor.apk /home/ashish/frost/frost/codekidX/app
 echo -e ""
 echo -e "Done"
 echo -e ""
