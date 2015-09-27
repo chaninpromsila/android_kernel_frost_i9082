@@ -3,8 +3,8 @@
 MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
-VERSION=-lollipop-2.00
-CODENAME=-lollipie-2.10
+VERSION=lollipop-2.00
+CODENAME=lollipie-2.32
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
@@ -22,30 +22,15 @@ read -p "Cleaning done Enter to proceed ..."
 echo -e "==============================================="
 echo -e ""
 clear
-echo -e "Copying Toolchain"
-echo -e "==============================================="
-echo -e ""
-
-if [ -d "toolchain" ]
-	then
-echo -e "Toolchain already present .."
-elif [ ! -d "toolchain" ]
-	then
-	mkdir toolchain
-    cd ..
-    cp -r toolchains/* frost/toolchain
-    cd frost
-
-fi
-
 
 read -p "Initialize Toolchain by pressing ENTER ..."
 echo -e "==============================================="
 echo -e ""
 
 export ARCH=arm
+export SUBARCH=arm
 #Toolchain
-export CROSS_COMPILE=$(pwd)/toolchain/android-toolchain-eabi/bin/arm-eabi-
+export CROSS_COMPILE='/home/ashish/toolchains/android-toolchain-eabi/bin/arm-eabi-'
 
 echo "Done"
 
