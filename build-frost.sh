@@ -4,7 +4,7 @@ MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
 VERSION=lollipop-2.00
-CODENAME=lollipie-2.32
+CODENAME=lollipie-2.33
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
