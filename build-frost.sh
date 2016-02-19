@@ -30,7 +30,7 @@ echo -e ""
 export ARCH=arm
 export SUBARCH=arm
 #Toolchain
-export CROSS_COMPILE='/home/ashish/toolchains/android-toolchain-eabi/bin/arm-eabi-'
+export CROSS_COMPILE='/home/ashish/toolchains/UBERTC-arm-eabi-6.0/bin/arm-eabi-'
 
 echo "Done"
 
