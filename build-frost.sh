@@ -3,8 +3,8 @@
 MODULES=frost/codekidX/lib/modules
 USER=codekidX
 DEVICE=I9082
-VERSION=-lollipop-2.00
-CODENAME=-lollipie-2.10
+VERSION=-marshmallow-2.5
+CODENAME=-marshion-2.5
 DATE=$(date '+%Y%m%d')
 Kernel="arch/arm/boot/zImage"
 
