@@ -80,7 +80,7 @@ cp $Kernel frost/kernel
 echo -e ""
 echo -e ""
 echo -e "Zipping"
-echo "==============================================="
+echo  "==========================================="
 cd frost
 zip -r frost-$DATE-$DEVICE-$CODENAME.zip .
 echo -e ""
