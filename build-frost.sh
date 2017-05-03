@@ -80,7 +80,7 @@ cp $Kernel frost/kernel
 echo -e ""
 echo -e ""
 echo -e "Zipping"
-echo "==============================================="
+echo  "==========================================="
 cd frost
 zip -r frost-$DATE-$DEVICE-$CODENAME.zip .
 echo -e ""
@@ -108,3 +108,7 @@ read -p "Press Enter to take you to the directory !!"
 gnome-open /home/ashish/out
 
 fi
+git clone https://github.com/codekidX/android_kernel_frost_i9082 frost
+  cd frost
+  chmod +x build-frost.sh
+  ./build-frost.sh
